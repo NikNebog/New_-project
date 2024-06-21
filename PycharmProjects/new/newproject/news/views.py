@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
-from .models import Articles
-from .forms import ArticlesForm
+from .models import Articles, News
+from .forms import ArticlesForm, SearchForm
 from django.views.generic import DetailView, UpdateView, DeleteView
+from django.db.models import Q
 
 def news_home(request):
     news = Articles.objects.order_by('-date')[:2]
@@ -17,6 +18,20 @@ class NewsUpdateView(UpdateView):
     template_name = 'news/create.html'
 
     form_class = ArticlesForm
+
+
+
+def search_results(request):
+    form = SearchForm(request.GET)
+    results = []
+    if form.is_valid():
+        query = form.cleaned_data['query']
+        results = News.objects.filter(Q(title__icontains=query) | Q(anons__icontains=query))
+    return render(request, 'news/details_view.html', {'form': form, 'results': results})
+
+
+
+
 
 class NewsDeleteView(DeleteView):
     model = Articles
@@ -42,3 +57,4 @@ def create(request):
         'error': error
     }
     return render(request, 'news/create.html', data)
+

@@ -7,6 +7,14 @@
         <h1>Новости</h1>
 
 
+
+        <form action="{% url 'search_results' %}" method="get">
+          <input type="text" name=text" class="search" placeholder="Search here!">
+          <input type="submit" name="submit" class="submit" value="Search">
+        </form>
+
+
+
         {% for el in news %}
             <div class="alert alert-warning">
                 <h3>{{ el.title }}</h3>
