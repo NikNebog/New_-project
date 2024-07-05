@@ -26,8 +26,8 @@ def search_results(request):
     results = []
     if form.is_valid():
         query = form.cleaned_data['query']
-        results = News.objects.filter(Q(title__icontains=query) | Q(anons__icontains=query))
-    return render(request, 'news/details_view.html', {'form': form, 'results': results})
+        results = Articles.objects.filter(Q(title__icontains=query))
+    return render(request, 'news/news_search.html', {'form': form, 'results': results})
 
 
 

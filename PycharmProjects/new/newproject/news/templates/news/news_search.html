@@ -1,0 +1,16 @@
+{% extends 'main/layout.html' %}
+
+{% block title %}Новости{% endblock %}
+
+{% block content %}
+<div class="features">
+    <h2>Результаты</h2>
+    <ul>
+        {% for el in results %}
+             <h1>{{ el.title }}</h1>
+             <p>{{ el.full_text }}</p>
+        {% endfor %}
+    </ul>
+    {% endblock %}
+
+</div>
